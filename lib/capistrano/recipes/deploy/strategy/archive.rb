@@ -6,14 +6,10 @@ module Capistrano
 
       # This class implements a strategy for deployments with prebuilt
       # packages. It copies the package to each target host and uncompresses
-      # it to the release directory. While normally discouraged, you
-      # usually want to use the :none SCM with this strategy (or for even less
-      # overhead, the :passthrough SCM from capistrano-deploy-scm-passthrough).
-      # You'll also need to set :repository to the target archive.
+      # it to the release directory. You'll need to set :archive_file to the target archive.
       #
-      #   set :scm, :none
       #   set :deploy_via, :archive
-      #   set :repository, "target/#{application}.tar.gz"
+      #   set :archive_file, "target/#{application}.tar.gz"
       #
       # This strategy is meant to be a drop-in replacement for the :copy
       # strategy, and supports all the same configuration variables EXCEPT
@@ -43,7 +39,7 @@ module Capistrano
           # Returns the name of the file that the source code will be
           # compressed to.
           def filename
-            @filename ||= File.expand_path(configuration[:repository], Dir.pwd)
+            @filename ||= File.expand_path(configuration[:archive_file], Dir.pwd)
           end
 
           # The directory on the remote server to which the archive should be
